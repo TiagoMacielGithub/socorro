@@ -9,7 +9,7 @@ class UserController {
 
     async signUpUser(req: Request, res: Response){
         const {name, password, email} = req.body;
-        await new UserService().signUpUser(name, password, email)
+        await new UserService().signUpUser(name, password, email);
 
     }
 }
