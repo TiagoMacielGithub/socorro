@@ -1,27 +1,19 @@
-import { Request, Response, Router } from "express";
-import cors from "cors";
-import express from "express";
-import { AppDataSource } from "./data-source";
-import router from "./routes/user.router";
+import http from 'http';
+import app from './config';
+import { AppDataSource } from './data-source';
 
+const PORT = 39000;
 
-const app = express();
-app.use(express.json());
-app.use(cors());
+const server = http.createServer({}, app);
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('Teste ok :)');
-});
+server.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 
-app.get('/nome', (req: Request, res: Response) => {
-    res.send('Projeto: {insira um nome}');
-});
+    AppDataSource.initialize()
+    .then(() => {
+        console.log("Banco ok")
+    })
+    .catch((error) => console.log(error))
+    console.log("Servidor ok")
+})
 
-app.use('/users', router)
-
-app.listen(38000, () => {
-   console.log("Iniciando");
-   AppDataSource.initialize().then(() => console.log("Banco iniciado"))
-});
-
-// "strictPropertyInitialization": false && "experimentalDecorators": true, no tsconfig

@@ -1,10 +1,11 @@
-import { Request, Response } from "express";
+import { Request, Response, request } from "express";
 import UserService from "../services/user.services";
+import User from "../models/User";
 
 class UserController {
     async loginUser(req: Request, res: Response){
         const {email, password} = req.body;
-        await new UserService().loginUser(email, password);
+        await new UserService().loginUser(email, password);      
     }
 
     async signUpUser(req: Request, res: Response){
